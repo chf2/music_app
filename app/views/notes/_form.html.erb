@@ -1,0 +1,11 @@
+<h4>Write a new note:</h4>
+
+<form action="<%= notes_path %>" method="POST">
+  <%= rails_auth_token %>
+  <input type="hidden"
+         name="note[track_id]"
+         value="<%= track_id %>">
+  <textarea name="note[body]">...</textarea>
+  <br>
+  <input type="submit" value="Post Note">
+</form>

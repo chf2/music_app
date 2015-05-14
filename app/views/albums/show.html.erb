@@ -1,0 +1,14 @@
+<h1><%= @album.name %>'s Album Page</h1>
+<% unless @tracks.empty? %>
+  <h3>Tracks (<%= @tracks.length %>)</h3>
+  <ol>
+    <% @tracks.each do |track| %>
+      <li><%= link_to track.name, track_url(track) %></li>
+    <% end %> 
+  </ol>
+<% end %>
+
+<%= link_to "Recorded by #{@album.band.name}", band_url(@album.band_id) %>
+<br>
+<%= link_to "Add a Track", new_album_track_url(@album) %><br>
+<%= link_to "Edit Album", edit_album_path(@album) %>

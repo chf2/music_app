@@ -1,0 +1,12 @@
+<h2><%= @band.name %>'s Band Page</h2>
+<% unless @albums.empty? %>
+  <h3>Albums (<%= @albums.length %>)</h3>
+  <ul>
+    <% @albums.each do |album| %>
+      <li><%= link_to album.name, album_url(album) %>
+    <% end %> 
+  </ul>
+<% end %>
+<%= link_to "Add New Album", new_band_album_url(@band) %><br>
+<%= link_to "Edit Band", edit_band_url(@band) %><br>
+<%= link_to "View All Bands", bands_url %>

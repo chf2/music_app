@@ -1,0 +1,50 @@
+<% action_url = @track.persisted? ? track_url(@track) : tracks_url %>
+<% use_method = @track.persisted? ? "PATCH" : "POST" %>
+<% submit_text = @track.persisted? ? "Update Track" : "Create Track" %>
+
+<form action="<%= action_url %>" method="POST">
+  <%= rails_auth_token %>
+  <input type="hidden" name="_method" value="<%= use_method %>">
+
+  <label>Track Name:
+    <input type="text" 
+           name="track[name]"
+           value="<%= @track.name %>">
+  </label>
+  
+  <br>
+  
+  <label>Album:
+    <select name="track[album_id]">
+      <% @albums.each do |album| %>
+        <% selected = (album.id == @album_id || album.id == @track.album_id) %>
+        <option value="<%= album.id %>" <%= selected ? "selected" : "" %>>
+          <%= album.name %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  
+  <br>
+
+  <label>Regular
+    <input type="radio"
+           name="track[track_type]"
+           value="Regular"
+           <%= "checked" if @track.track_type == "Regular" %>>
+  </label>
+  <label>Bonus
+  <input type="radio"
+           name="track[track_type]"
+           value="Bonus"
+           <%= "checked" if @track.track_type == "Bonus" %>>
+  </label>
+
+  <br>
+
+  <textarea name="track[lyrics]">Paste Lyrics Here</textarea>
+
+  <br>
+
+  <input type="submit" value="<%= submit_text %>">
+</form>

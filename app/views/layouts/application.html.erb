@@ -7,8 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%= render 'layouts/errors' %>
+<h1>Music App</h1>
 
 <%= yield %>
+
+<% if logged_in? %>
+<br><br>
+  <%= button_to "Log Out", session_url, method: :delete %>
+<% end %> 
 
 </body>
 </html>
