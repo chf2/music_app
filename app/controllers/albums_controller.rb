@@ -1,5 +1,6 @@
 class AlbumsController < ApplicationController
   before_action :redirect_if_not_logged_in
+  before_action :admin_required, except: [:show]
 
   def new
     @album = Album.new
@@ -44,6 +45,7 @@ class AlbumsController < ApplicationController
   def destroy
     album = Album.find(params[:id])
     album.destroy
+    flash[:success] = "Removed #{album.name}."
     redirect_to :root
   end
 

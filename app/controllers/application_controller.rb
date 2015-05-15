@@ -22,7 +22,22 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_if_not_logged_in
-    redirect_to new_session_url unless logged_in?
+    if !logged_in?
+      flash[:warning] = "Please log in"
+    elsif !current_user.activated
+      flash[:warning] = "Please activate your account. "
+      flash[:warning] += "Email sent to #{current_user.email}."
+    else
+      return
+    end
+    redirect_to new_session_url
+  end
+
+  def admin_required
+    unless current_user.admin?
+      flash[:warning] = "Admin privelages required."
+      redirect_to new_session_url 
+    end
   end
 
 end

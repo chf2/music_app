@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    redirect_to bands_url if logged_in? && current_user.activated
   end
 
   def create

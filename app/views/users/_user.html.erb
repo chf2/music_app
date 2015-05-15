@@ -1,0 +1,18 @@
+<div class="user-stub">
+  <h4><%= user.email %></h4>
+  <h5>Notes Written:</h5>
+  </ul>
+    <% user.notes.each do |note| %>
+      <li><%= note.body[0...20] %></li>
+    <% end %>
+  </ul>
+  <% if !user.admin %>
+    <%= button_to "Make Admin", toggle_admin_user_url(user), method: :post %>
+  <% else %>
+     <%= button_to "Remove Admin", toggle_admin_user_url(user), method: :post %>
+  <% end %>
+  <%= button_to "Delete User", user_url(user), method: :delete %>
+</div>
+
+
+

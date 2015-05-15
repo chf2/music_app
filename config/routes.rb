@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   root to: "bands#index"
-  resources :users, only: [:new, :create, :show] do
+  resources :users, only: [:new, :create, :show, :index, :destroy] do
     collection do 
       get 'activate'
+    end
+    member do
+      post 'toggle_admin'
     end
   end
   resource :session, only: [:new, :create, :destroy]

@@ -1,5 +1,6 @@
 class TracksController < ApplicationController
   before_action :redirect_if_not_logged_in
+  before_action :admin_required, except: [:show]
   
   def new
     @track = Track.new

@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :redirect_if_not_logged_in, only: [:show]
+  before_action :admin_required, only: [:index, :destroy, :make_admin]
 
   def index
-    @users = User.all
+    @users = User.all.includes(:notes)
   end
 
   def new
@@ -25,16 +26,27 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to new_user_url
+    flash[:success] = "Removed user #{user.email} from application."
+    redirect_to users_url
   end
 
-  def edit
+  def toggle_admin
     @user = User.find(params[:id])
+    @user.toggle!(:admin)
+    redirect_to users_url
   end
 
-  def update
-    @user = User.find(params[:id])
-  end
+  # EDIT FUNCTIONALITY NOT IMPLEMENTED
+
+  # def edit
+  #   redirect_to new_session_url unless current_user.id == params([:id])
+  #   @user = User.find(params[:id])
+  # end
+
+  # def update
+  #   redirect_to new_session_url unless current_user.id == params([:id])
+  #   @user = User.find(params[:id])
+  # end
 
   def show
     @user = current_user
@@ -47,7 +59,7 @@ class UsersController < ApplicationController
       if user.activated
         flash[:warning] = "User already activated."
       else
-        user.toggle(:activated)
+        user.toggle!(:activated)
         flash[:success] = "Account activated!"
       end
 

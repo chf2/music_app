@@ -23,6 +23,7 @@ class NotesController < ApplicationController
   end
 
   def check_user_owns_note
+    return if current_user.admin
     note = Note.find(params[:id])
     if current_user.id != note.user_id
       render :status => :forbidden, :text => "Can't Delete Other Users' Notes"

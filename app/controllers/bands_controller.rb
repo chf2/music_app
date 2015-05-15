@@ -1,5 +1,6 @@
 class BandsController < ApplicationController
   before_action :redirect_if_not_logged_in
+  before_action :admin_required, except: [:show, :index]
 
   def index
     @bands = Band.all.includes(:albums)
@@ -37,7 +38,7 @@ class BandsController < ApplicationController
 
   def show
     @band = Band.find(params[:id])
-    @albums = @band.albums
+    @albums = @band.albums.includes(:tracks)
   end
 
   def destroy
